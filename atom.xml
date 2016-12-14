@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ZeroSN</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://zerosn.com/"/>
+  <updated>2016-12-12T11:53:26.714Z</updated>
+  <id>http://zerosn.com/</id>
+  
+  <author>
+    <name>fbcha</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>phpprobe探针</title>
+    <link href="http://zerosn.com/2016/12/05/php-prober/"/>
+    <id>http://zerosn.com/2016/12/05/php-prober/</id>
+    <published>2016-12-05T14:02:00.000Z</published>
+    <updated>2016-12-12T11:53:26.714Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="phpprobe"><a href="#phpprobe" class="headerlink" title="phpprobe"></a>phpprobe</h2><p>phpprobe探针<br>当前版本v1.3</p><p>程序功能：探测web服务器运行环境<br>程序开发：浪子不归（fbcha or shooter）<br>联系方式：fbcha@163.com<br>GitHub：<a href="https://github.com/fbcha/phpprobe" target="_blank" rel="external">https://github.com/fbcha/phpprobe</a><br>Git@OSC: <a href="http://git.oschina.net/fbcha/phpprobe" target="_blank" rel="external">http://git.oschina.net/fbcha/phpprobe</a><br>博客： <a href="https://my.oschina.net/fbcha/blog" target="_blank" rel="external">https://my.oschina.net/fbcha/blog</a></p><p>phpprobe探针用于探测web运行环境、php信息，查看服务器IP地址，服务器硬盘资源，内存占用，cpu等信息。支持Linux，FreeBSD，Windows，OS X平台。</p><p>下载:</p><p>GitHub：<a href="https://github.com/fbcha/phpprobe/releases" target="_blank" rel="external">https://github.com/fbcha/phpprobe/releases</a></p><p>Git@OSC: <a href="http://git.oschina.net/fbcha/phpprobe/releases" target="_blank" rel="external">http://git.oschina.net/fbcha/phpprobe/releases</a></p><p>百度网盘：<a href="https://pan.baidu.com/s/1c2tBGMO" target="_blank" rel="external">https://pan.baidu.com/s/1c2tBGMO</a></p><p>ChinaZ：<a href="http://down.chinaz.com/soft/38362.htm" target="_blank" rel="external">http://down.chinaz.com/soft/38362.htm</a></p><p>更新记录：<br>2016-11-24<br>V1.3<br>1、增加服务器性能测试<br>2、增加数据库连接检测<br>3、增加函数检测</p><p>2016-11-08<br>V1.2<br>1、增加打开关闭实时信息的显示<br>2、增加对FreeBSD，Windows，OS X 平台的支持</p><p>2016-10-21<br>V1.1<br>1、增加服务器实时数据，利用图表实时显示</p><p><img src="https://github.com/fbcha/phpprobe/raw/master/screenshot.png" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;phpprobe&quot;&gt;&lt;a href=&quot;#phpprobe&quot; class=&quot;headerlink&quot; title=&quot;phpprobe&quot;&gt;&lt;/a&gt;phpprobe&lt;/h2&gt;&lt;p&gt;phpprobe探针&lt;br&gt;当前版本v1.3&lt;/p&gt;&lt;p&gt;程序功能：探测web服务器运行环境
+    
+    </summary>
+    
+    
+      <category term="php" scheme="http://zerosn.com/tags/php/"/>
+    
+      <category term="prober" scheme="http://zerosn.com/tags/prober/"/>
+    
+      <category term="探针" scheme="http://zerosn.com/tags/%E6%8E%A2%E9%92%88/"/>
+    
+  </entry>
+  
+</feed>
