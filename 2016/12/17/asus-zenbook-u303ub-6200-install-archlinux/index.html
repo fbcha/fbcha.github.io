@@ -1,1 +1,241 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>ASUS ZenBook U303UB 6200 笔记本安装archlinux笔记 | ZeroSN</title><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="keywords" content="null"><meta name="description" content="null"><meta name="author" content="fbcha (fbcha@163.com)"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><meta name="apple-mobile-web-app-title" content="ZeroSN"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="480"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#34495e"><meta name="mobile-web-app-capable" content="yes"><link rel="stylesheet" href="/css/vendor/bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="/css/flat-ui.min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/highlight/github.css"></head><body><header><div class="container"><div class="row"><nav class="navbar navbar-inverse navbar-embossed" role="navigation"><div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01"><span class="sr-only">Toggle navigation</span></button> <a class="navbar-brand" href="/">ZeroSN</a></div><div class="collapse navbar-collapse" id="navbar-collapse-01"><ul class="nav navbar-nav navbar-left"><li><a href="/"><i class="fa fa-home"></i> Home</a></li><li><a href="/archives"><i class="fa fa-archive"></i> Archives</a></li><li><a href="/tags"><i class="fa fa-tags"></i> Tags</a></li></ul><form class="navbar-form navbar-right" action="#" role="search"><div class="form-group"><div class="input-group"><input class="form-control" id="local-search-input" name="q" type="search" autocomplete="off" placeholder="Search"> <span class="input-group-btn"><button type="submit" class="btn"><span class="fui-search"></span></button></span></div></div></form><div id="local-search-result" class="local-search-result"></div></div></nav></div></div></header><section class="container"><div class="row"><div id="content-wrapper" class="clearfix"><div class="col-lg-9 col-md-9 col-xs-12 col-sm-12"><div class="articles-container"><div class="article"><h2 class="article-title">ASUS ZenBook U303UB 6200 笔记本安装archlinux笔记</h2><div id="single-meta"><span><span><span>fbcha</span></span> &nbsp;&nbsp;•&nbsp;&nbsp; <span>2016-12-17</span></span></div><div id="post-content" class="markdown"><h4 id="ASUS-ZenBook-U303UB-6200-笔记本配置："><a href="#ASUS-ZenBook-U303UB-6200-笔记本配置：" class="headerlink" title="ASUS ZenBook U303UB 6200 笔记本配置："></a>ASUS ZenBook U303UB 6200 笔记本配置：</h4><blockquote><p>CPU：六代intel i5-6200<br>内存：4GB 可扩展<br>硬盘：500GB 机械硬盘<br>显卡：NVIDIA GeForce 940M（独显）<br>13.3寸屏，1920x1080分辨率</p></blockquote><p>原装windows 10 home 操作系统，默认分了两个分区，直接把archlinux装在了第二个分区上，运行双系统。</p><p>装archlinux前先进bios把secure boot关闭了，一定要关掉，否则无法安装archlinux，当然也有另外的方法，关闭secure boot最为省事 :)</p><p>下载archlinux系统镜像，可以直接在官方下载，<a href="http://www.archlinux.org" target="_blank" rel="external">http://www.archlinux.org</a></p><p>把下载的archlinux镜像文件写入到u盘中，windows下有很多工具，其它系统也可以用命令写入，网上有很多方法，默认的window 10系统使用的是uefi引导方式，所以直接使用就可以了。</p><p>用做好的u盘启动，进入，出现命令界面，进行安装盘的配置：</p><p>之前网上找到的教程要设置键盘布局、字体、语言什么的，个人感觉没什么必要，除非有些机型，一般没什么问题，显示语言尽量不用动，因为如果设成中文的话，会出现乱码，这个需要改动内核了。网络和pacman软件仓库是要设置的。</p><p><strong>网络设置：</strong><br>因为zenbook u303ub 是一款便携本，所以是不能插网线的（除非外接），直接联接无线网络就可以了，可以使用下边的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># wifi-menu</div></pre></td></tr></table></figure></p><p>然后选择你的网络连接。</p><p><strong>pacman 软件仓库镜像服务器：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">软件仓库全部服务器列表，可以手动去掉前边的“#”启用，然后使用 pacman-Syy 更新本地数据</div><div class="line"># nano /etc/pacman.d/mirrorlist</div><div class="line">也可以通过下边的方法直接选择所有中国大陆镜像服务器</div><div class="line"># grep -A 1 &apos;China&apos; /etc/pacman.d/mirrorlist    // 查看所有中国大陆镜像</div><div class="line"># sed -i &apos;/Score/&#123;/China/!&#123;n;s/^/#/&#125;&#125;&apos; /etc/pacman.d/mirrorlist    // 选择所有中国大陆镜像</div><div class="line"># pacman -Syy    // 更新本地数据</div></pre></td></tr></table></figure></p><p><strong>分区：</strong><br>可以使用fdisk工具来分区，用 lsblk来查看磁盘及分区，因为我的在一块硬盘上装双系统，所以直接把第二分区划分了一个swap分区和系统分区，用mkfs.ext4来格式化系统分区，用mkswap来创建swap分区，用swapon来激活swap分区；这里的设备名移是我的磁盘划分（比如 sda5、sda6），具体可根据自己的实际情况划分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># lsblk    // 查看磁盘及分区</div><div class="line"># mkfs.ext4 /dev/sda5    // 创建ext4分区</div><div class="line"># mkswap /dev/sda6    // 创建swap交互分区</div><div class="line"># swapon /dev/sda6    // 激活交互分区</div><div class="line">挂载分区：</div><div class="line"># mount /dev/sda5 /mnt    // 挂载根目录</div><div class="line"># mkdir -p /mnt/boot/EFI    // 创建UEFI挂载点</div><div class="line"># mount /dev/sda1 /mnt/boot/EFI    // 挂载UEFI分区，sda1 是共用的UEFI分区，windows的也在这里</div></pre></td></tr></table></figure></p><p><strong>安装基础系统：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># pacstrap -i /mnt base base-devel</div></pre></td></tr></table></figure></p><p><strong>配置fstab：</strong><br>不要重复使用genfstab生成fstab，如果有问题直接修改fstab。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab    // 生成fstab</div><div class="line"># cat /mnt/etc/fstab    // 检查生成的fstab</div></pre></td></tr></table></figure></p><p><strong>配置系统：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># arch-chroot /mnt /bin/bash    // 切换到根目录</div><div class="line"># ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime    // 设置中国大陆时区</div></pre></td></tr></table></figure></p><p>硬件时间设置，推荐utc，如果是双系统的话要注意保持两个系统用同样的时间设置，windows使用的是CST时间，设置不对的话，两个系统时间会不同步，所以尽量的让两个系统使用同一时间设置，这里我使用的是本地时间，和windows同步（懒得去修改windows时间 ^_^） ：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># hwclock --systohc --utc    // UTC标准时间</div><div class="line"># hwclock --systohc --localtime    // 本地时间</div></pre></td></tr></table></figure></p><p><strong>主机名：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># echo fbchalinux &gt; /etc/hostname</div><div class="line"># nano /etc/hosts    // 将主机名填入</div><div class="line">快速设置</div><div class="line"># HOSTNAME=&apos;fbchalinux&apos;; echo $HOSTNAME &gt; /etc/hostname; \</div><div class="line">sed -i &apos;/localhost/s/$/\t&apos;&quot;$HOSTNAME&quot;&apos;/g&apos; /etc/hosts</div></pre></td></tr></table></figure></p><p><strong>无线网络：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># pacman -S iw wpa_supplicant dialog</div></pre></td></tr></table></figure></p><p>设置root用户密码，创建一个日常用户，添加wheel用户组能够使用sudo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># passwd    // 设置root用户密码</div><div class="line"># useradd -m -g users -G wheel -s /bin/bash fbcha    // 创建日常用户&quot;fbcha&quot;并添加到wheel用户组</div><div class="line"># passwd fbcha    // 为fbcha设置密码</div><div class="line">编辑sudsers文件，去掉 %wheel    ALL=(ALL) 注释，允许wheel用户组使用sudo</div><div class="line"># nano /etc/sudoers</div></pre></td></tr></table></figure></p><p><strong>安装UEFI引导：</strong><br>如果多系统可以安装os-prober自动检索其它系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># pacman -S dosfstools grub efibootmgr os-prober</div><div class="line"># grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=arch_grub --recheck</div><div class="line"># grub-mkconfig -o /boot/grub/grub.cfg</div></pre></td></tr></table></figure></p><p><strong>卸载分区并重启：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># exit    // 退回安装环境</div><div class="line"># umount -R /mnt    // 卸载新分区</div><div class="line"># reboot    // 重启</div><div class="line">拔掉U盘</div></pre></td></tr></table></figure></p><p>以上是安装，下边是安装后的一些配置，根据自已需要进行安装。</p><h5 id="配置图形界面（本人用的是xfce4桌面环境）："><a href="#配置图形界面（本人用的是xfce4桌面环境）：" class="headerlink" title="配置图形界面（本人用的是xfce4桌面环境）："></a>配置图形界面（本人用的是xfce4桌面环境）：</h5><p><strong>安装显卡驱动：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># lspci | grep &quot;3D|VGA&quot;    // 确定显卡型号，如果只有集显的话可以把3D去掉</div><div class="line"># pacman -S xf86-video-vesa    // 通用显卡驱动</div><div class="line"># pacman -S xf86-video-intel    // intel核显驱动</div><div class="line"># pacman -S nvidia    // nvidia 显卡驱动</div><div class="line">如果双显卡想使用nvidia的optimus技术的话，可以使用bumblebee来实现，因为nvidia的optimus技术在linux下是无法使用的，可以用第三方技术来实现，使用bumblebee方式可以用下边的方法安装，来解决依赖问题：</div><div class="line"># pacman -S intel-dri xf86-video-intel bumblebee nvidia</div><div class="line"># gpasswd -a fbcha bumblebee    // 把用户添加到bumblebee用户组</div></pre></td></tr></table></figure></p><p><strong>安装X窗口系统服务：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># pacman -S xorg-server xorg-server-utils</div><div class="line"># pacman -S xf86-input-synaptics    // 触控板驱动</div><div class="line"># pacman -S ttf-dejavu wqy-microhei    // 安装字体</div></pre></td></tr></table></figure></p><p><strong>安装桌面环境：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># pacman -S xfce4 xfce4-goodies</div></pre></td></tr></table></figure></p><p><strong>安装输入法：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># pacman -S fcitx-im fcite-configtool    // 安装fcitx</div><div class="line">配置输入法</div><div class="line"># nano ./.xinitrc    // 编辑.xinitrc 没有可以自行创建，在用户目录，然后写入以下信息</div><div class="line">export LANG=zh-CN.UTF-8</div><div class="line">export GTK_IM_MODULE=fcitx</div><div class="line">export QT_IM_MODULE=fcitx</div><div class="line">export XMODIFIERS=&quot;@im=fcitx&quot;</div></pre></td></tr></table></figure></p><p><strong>安装网络连接：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># pacman -S networkmanager network-manager-applet xfce4-notifyd hicolor-icon-theme gonme-icon-theme gnome-keyring</div><div class="line">如果有dhcpcd则关闭</div><div class="line"># systemctl disable dhcpcd.service</div><div class="line"># systemctl enable NetworkManager</div><div class="line"># systemctl start NetworkManager</div></pre></td></tr></table></figure></p><p><strong>安装Bluetooth：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># pacman -S bluez bluez-utils blueman</div><div class="line"># systemctl enable bluetooth</div><div class="line">如果需要开机启动蓝牙：</div><div class="line"># nano /etc/udev/rules.d/10-local.rules</div><div class="line">写入以下内容：</div><div class="line"># Set bluetooth power up</div><div class="line">ACTION==&quot;add&quot;, KERNEL==&quot;hci0&quot;, RUN+=&quot;usr/bin/hciconfig hci0 up&quot;</div></pre></td></tr></table></figure></p><p><strong>安装yaourt：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># nano /etc/pacman.conf    // 编辑pacman.conf，写入以下内容</div><div class="line">[archlinuxcn]</div><div class="line">SigLevel = Optional TrustedOnly</div><div class="line">Server = http://mirrors.163.com/archlinux-cn/$arch</div><div class="line">更新本地数据</div><div class="line"># pacman -Syy</div><div class="line">安装yaourt</div><div class="line"># pacman -S yaourt</div></pre></td></tr></table></figure></p><p><strong>关闭独显：</strong><br>下面的配置文件如果没有需要自行创建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"># pacman -S bbswitch</div><div class="line"># nano /etc/modules-load.d/bbswitch.conf    // 写入下边内容，每次启动都会加载bbswitch模块</div><div class="line">bbswitch</div><div class="line"># nano /etc/modprobe.d/bbswitch.conf    // 写入下边内容，关闭bbswitch默认加载参数</div><div class="line">options bbswitch load_state=0</div><div class="line"># nano /etc/modprobe.d/nouveau_blacklist.conf</div><div class="line">写入下边内容，有时候bbswitch加载了，但是不能关闭显卡，因为有些模块正在占用着，因此要禁掉</div><div class="line">blacklist nouveau</div><div class="line">blacklist nvidiafb</div><div class="line"># nano /usr/lib/systemd/system-shutdown/nvidia_card_enable.sh</div><div class="line">需要运行权限，写入下边内容，每次reboot的时候，显卡都是关闭的，不管是重启到windows还是linux，都会找不到设备，必须彻底关机才行。解决该问题的办法就是每次重启都启用显卡。</div><div class="line">#!/bin/bash</div><div class="line">case &quot;$1&quot; in</div><div class="line">        reboot)</div><div class="line">                echo &quot;Enabling NVIDIA GPU&quot;</div><div class="line">                echo ON &gt; /proc/acpi/bbswitch</div><div class="line">        ;;</div><div class="line">        *)</div><div class="line">esac</div></pre></td></tr></table></figure></p><p><strong>配置laptop-mode-tools：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># yaourt -S laptop-mode-tools</div><div class="line"># pacman -S hdparm cpupower</div><div class="line"># systemctl enable cpupower.service</div><div class="line">修改 /etc/laptop-mode/laptop-mode.conf</div><div class="line">ENABLE_LAPTOP_MODE_ON_AC=0</div><div class="line">默认为 0 ，这里可以修改为 1 ，使用外接电源时也启用laptop_mode</div><div class="line">CONTROL_HD_IDLE_TIMEOUT=1    // 默认为 1 ，修改为 0</div><div class="line">BATT_HD_POWERMGMT=1    // 默认为 1 ，修改为128</div><div class="line"># systemctl enable laptop-mode.service</div></pre></td></tr></table></figure></p><p><strong>安装声音工具：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># pacman -S alsa-utils</div></pre></td></tr></table></figure></p><p><strong>配置Fn+快捷键：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">编辑 /etc/default/grub</div><div class="line"># nano /etc/default/grub</div><div class="line">将 GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet&quot; 修改为：</div><div class="line">GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet acpi_osi=&quot;</div><div class="line"># nano /usr/share/X11/xorg.conf.d/20-intel.conf    // 如没有自行创建，写入下边内容</div><div class="line">Section &quot;Device&quot;</div><div class="line">        Identifier    &quot;card0&quot;</div><div class="line">        Driver        &quot;intel&quot;</div><div class="line">        Option        &quot;Backlight&quot;    &quot;intel_backlight&quot;</div><div class="line">        BusID        &quot;PCI:0:2:0&quot;</div><div class="line">EndSection</div></pre></td></tr></table></figure></p><p>到此，archlinux 安装配置完毕，以上只是按本人机器做的安装和配置，会和实际情况或其它机型有所不同，仅供参考。</p></div><div class="post-tags"><span class="fa fa-tags tag"></span> <a href="/tags/asus/" class="label label-primary" target="_blank">asus</a> <a href="/tags/zenbook/" class="label label-primary" target="_blank">zenbook</a> <a href="/tags/u303ub/" class="label label-primary" target="_blank">u303ub</a> <a href="/tags/archlinux/" class="label label-primary" target="_blank">archlinux</a></div></div></div></div><div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"><div class="sidebar-container"><div class="user-box"><div class="tile"><img class="tile-image big-illustration img-circle" alt="" src="/img/author_head.jpe"><h3 class="tile-title">fbcha</h3><p></p><a class="btn btn-primary" href="https://github.com/fbcha" target="_blank"><i class="fa fa-github fa-2x fa-inverse"></i></a> <a class="btn btn-primary" href="http://weibo.com/p/1005051191108697" target="_blank"><i class="fa fa-weibo fa-2x fa-inverse"></i></a> <a class="btn btn-primary" href="/atom.xml"><i class="fa fa-rss fa-2x fa-inverse"></i></a></div></div><div class="archives-box"><h6>Archives</h6><div><ul class="list-unstyled"><li><a class="sidebar_archives-link" href="/archives/2016/12/">2016-12-20<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">2016-12-17<span class="sidebar_archives-count">1</span></a></li></ul></div></div><div class="tag-cloud-box"><h6>Tag Cloud</h6><p><a href="/tags/archlinux/" style="font-size:10px">archlinux</a> <a href="/tags/asus/" style="font-size:10px">asus</a> <a href="/tags/php/" style="font-size:10px">php</a> <a href="/tags/prober/" style="font-size:10px">prober</a> <a href="/tags/u303ub/" style="font-size:10px">u303ub</a> <a href="/tags/zenbook/" style="font-size:10px">zenbook</a> <a href="/tags/探针/" style="font-size:10px">探针</a></p></div></div></div></div></div></section><footer><div class="container"><div id="footer-wrapper"><div class="footer-copy"><p>Copyright &copy; 2016 ZeroSN.com</p><p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/fbcha/hexo-theme-zerosn" target="_blank">ZeroSN</a></p></div></div></div><div id="site-count" style="display:none"><script src="https://s4.cnzz.com/z_stat.php?id=1260976776&web_id=1260976776" language="JavaScript"></script></div></footer><script src="/js/vendor/jquery.min.js"></script><script src="/js/vendor/video.js"></script><script src="/js/flat-ui.min.js"></script><script src="/js/highlight.min.js"></script><script src="/js/search.js"></script><script src="/js/main.js"></script><script src="/js/nprogress.min.js"></script><script type="text/javascript">NProgress.configure({showSpinner:!0}),NProgress.start(),$("#nprogress .bar").css({background:"#3498db"}),$("#nprogress .peg").css({"box-shadow":"0 0 10px #3498db, 0 0 15px #3498db"}),$("#nprogress .spinner-icon").css({"border-top-color":"#3498db","border-left-color":"#3498db"}),setTimeout(function(){NProgress.done(),$(".fade").removeClass("out")},800);</script><script type="text/javascript">var search_path="search.xml";0==search_path.length&&(search_path="search.xml");var path="/"+search_path;searchFunc(path,"local-search-input","local-search-result");</script></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+   	
+    <meta charset="utf-8">
+    <title>
+        ASUS ZenBook U303UB 6200 笔记本安装archlinux笔记 | ZeroSN
+    </title>
+
+    
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="keywords" content="null">
+    <meta name="description" content="null">
+    <meta name="author" content="fbcha (fbcha@163.com)">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="ZeroSN">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- android -->
+    <meta name="theme-color" content="#34495e">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="/css/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/flat-ui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/highlight/github.css">
+</head>
+<body>
+		<header>
+		<div class="container">
+			<div class="row">
+				<nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                				<span class="sr-only">Toggle navigation</span>
+              				</button>
+              				<a class="navbar-brand" href="/">ZeroSN</a>
+					</div>
+					<div class="collapse navbar-collapse" id="navbar-collapse-01">
+						<ul class="nav navbar-nav navbar-left">
+							
+								<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+							
+								<li><a href="/archives"><i class="fa fa-archive"></i> Archives</a></li>
+							
+								<li><a href="/tags"><i class="fa fa-tags"></i> Tags</a></li>
+							
+						</ul>
+						<form class="navbar-form navbar-right" action="#" role="search">
+							<div class="form-group">
+								<div class="input-group">
+									<input class="form-control" id="local-search-input" name="q" type="search" autocomplete="off" placeholder="Search">
+									<span class="input-group-btn">
+										<button type="submit" class="btn"><span class="fui-search"></span></button>
+									</span>
+								</div>
+							</div>
+						</form>
+						<div id="local-search-result" class="local-search-result"></div>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</header>
+	<section class="container">
+		<div class="row">
+			<div id="content-wrapper" class="clearfix">
+				<div class="col-lg-9 col-md-9 col-xs-12 col-sm-12">
+										<div class="articles-container">
+						<div class="article">
+													<h2 class="article-title">ASUS ZenBook U303UB 6200 笔记本安装archlinux笔记</h2>
+						<div id="single-meta">
+							<span>
+								<span>
+									<span>fbcha</span>
+								</span>
+								&nbsp;&nbsp;•&nbsp;&nbsp;
+								<span>2016-12-17</span>
+								
+	
+
+							</span>
+						</div>
+						<div id="post-content" class="markdown"><h4 id="ASUS-ZenBook-U303UB-6200-笔记本配置："><a href="#ASUS-ZenBook-U303UB-6200-笔记本配置：" class="headerlink" title="ASUS ZenBook U303UB 6200 笔记本配置："></a>ASUS ZenBook U303UB 6200 笔记本配置：</h4><blockquote>
+<p>CPU：六代intel i5-6200<br>内存：4GB 可扩展<br>硬盘：500GB 机械硬盘<br>显卡：NVIDIA GeForce 940M（独显）<br>13.3寸屏，1920x1080分辨率  </p>
+</blockquote>
+<p>原装windows 10 home 操作系统，默认分了两个分区，直接把archlinux装在了第二个分区上，运行双系统。</p>
+<p>装archlinux前先进bios把secure boot关闭了，一定要关掉，否则无法安装archlinux，当然也有另外的方法，关闭secure boot最为省事 :)</p>
+<p>下载archlinux系统镜像，可以直接在官方下载，<a href="http://www.archlinux.org" target="_blank" rel="external">http://www.archlinux.org</a></p>
+<p>把下载的archlinux镜像文件写入到u盘中，windows下有很多工具，其它系统也可以用命令写入，网上有很多方法，默认的window 10系统使用的是uefi引导方式，所以直接使用就可以了。</p>
+<p>用做好的u盘启动，进入，出现命令界面，进行安装盘的配置：</p>
+<p>之前网上找到的教程要设置键盘布局、字体、语言什么的，个人感觉没什么必要，除非有些机型，一般没什么问题，显示语言尽量不用动，因为如果设成中文的话，会出现乱码，这个需要改动内核了。网络和pacman软件仓库是要设置的。</p>
+<p><strong>网络设置：</strong><br>因为zenbook u303ub 是一款便携本，所以是不能插网线的（除非外接），直接联接无线网络就可以了，可以使用下边的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># wifi-menu</div></pre></td></tr></table></figure></p>
+<p>然后选择你的网络连接。</p>
+<p><strong>pacman 软件仓库镜像服务器：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">软件仓库全部服务器列表，可以手动去掉前边的“#”启用，然后使用 pacman-Syy 更新本地数据</div><div class="line"># nano /etc/pacman.d/mirrorlist</div><div class="line">也可以通过下边的方法直接选择所有中国大陆镜像服务器</div><div class="line"># grep -A 1 &apos;China&apos; /etc/pacman.d/mirrorlist    // 查看所有中国大陆镜像</div><div class="line"># sed -i &apos;/Score/&#123;/China/!&#123;n;s/^/#/&#125;&#125;&apos; /etc/pacman.d/mirrorlist    // 选择所有中国大陆镜像</div><div class="line"># pacman -Syy    // 更新本地数据</div></pre></td></tr></table></figure></p>
+<p><strong>分区：</strong><br>可以使用fdisk工具来分区，用 lsblk来查看磁盘及分区，因为我的在一块硬盘上装双系统，所以直接把第二分区划分了一个swap分区和系统分区，用mkfs.ext4来格式化系统分区，用mkswap来创建swap分区，用swapon来激活swap分区；这里的设备名移是我的磁盘划分（比如 sda5、sda6），具体可根据自己的实际情况划分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># lsblk    // 查看磁盘及分区</div><div class="line"># mkfs.ext4 /dev/sda5    // 创建ext4分区</div><div class="line"># mkswap /dev/sda6    // 创建swap交互分区</div><div class="line"># swapon /dev/sda6    // 激活交互分区</div><div class="line">挂载分区：</div><div class="line"># mount /dev/sda5 /mnt    // 挂载根目录</div><div class="line"># mkdir -p /mnt/boot/EFI    // 创建UEFI挂载点</div><div class="line"># mount /dev/sda1 /mnt/boot/EFI    // 挂载UEFI分区，sda1 是共用的UEFI分区，windows的也在这里</div></pre></td></tr></table></figure></p>
+<p><strong>安装基础系统：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># pacstrap -i /mnt base base-devel</div></pre></td></tr></table></figure></p>
+<p><strong>配置fstab：</strong><br>不要重复使用genfstab生成fstab，如果有问题直接修改fstab。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab    // 生成fstab</div><div class="line"># cat /mnt/etc/fstab    // 检查生成的fstab</div></pre></td></tr></table></figure></p>
+<p><strong>配置系统：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># arch-chroot /mnt /bin/bash    // 切换到根目录</div><div class="line"># ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime    // 设置中国大陆时区</div></pre></td></tr></table></figure></p>
+<p>硬件时间设置，推荐utc，如果是双系统的话要注意保持两个系统用同样的时间设置，windows使用的是CST时间，设置不对的话，两个系统时间会不同步，所以尽量的让两个系统使用同一时间设置，这里我使用的是本地时间，和windows同步（懒得去修改windows时间 ^_^） ：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># hwclock --systohc --utc    // UTC标准时间</div><div class="line"># hwclock --systohc --localtime    // 本地时间</div></pre></td></tr></table></figure></p>
+<p><strong>主机名：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># echo fbchalinux &gt; /etc/hostname</div><div class="line"># nano /etc/hosts    // 将主机名填入</div><div class="line">快速设置</div><div class="line"># HOSTNAME=&apos;fbchalinux&apos;; echo $HOSTNAME &gt; /etc/hostname; \</div><div class="line">sed -i &apos;/localhost/s/$/\t&apos;&quot;$HOSTNAME&quot;&apos;/g&apos; /etc/hosts</div></pre></td></tr></table></figure></p>
+<p><strong>无线网络：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># pacman -S iw wpa_supplicant dialog</div></pre></td></tr></table></figure></p>
+<p>设置root用户密码，创建一个日常用户，添加wheel用户组能够使用sudo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># passwd    // 设置root用户密码</div><div class="line"># useradd -m -g users -G wheel -s /bin/bash fbcha    // 创建日常用户&quot;fbcha&quot;并添加到wheel用户组</div><div class="line"># passwd fbcha    // 为fbcha设置密码</div><div class="line">编辑sudsers文件，去掉 %wheel    ALL=(ALL) 注释，允许wheel用户组使用sudo</div><div class="line"># nano /etc/sudoers</div></pre></td></tr></table></figure></p>
+<p><strong>安装UEFI引导：</strong><br>如果多系统可以安装os-prober自动检索其它系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># pacman -S dosfstools grub efibootmgr os-prober</div><div class="line"># grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=arch_grub --recheck</div><div class="line"># grub-mkconfig -o /boot/grub/grub.cfg</div></pre></td></tr></table></figure></p>
+<p><strong>卸载分区并重启：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># exit    // 退回安装环境</div><div class="line"># umount -R /mnt    // 卸载新分区</div><div class="line"># reboot    // 重启</div><div class="line">拔掉U盘</div></pre></td></tr></table></figure></p>
+<p>以上是安装，下边是安装后的一些配置，根据自已需要进行安装。</p>
+<h5 id="配置图形界面（本人用的是xfce4桌面环境）："><a href="#配置图形界面（本人用的是xfce4桌面环境）：" class="headerlink" title="配置图形界面（本人用的是xfce4桌面环境）："></a>配置图形界面（本人用的是xfce4桌面环境）：</h5><p><strong>安装显卡驱动：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># lspci | grep &quot;3D|VGA&quot;    // 确定显卡型号，如果只有集显的话可以把3D去掉</div><div class="line"># pacman -S xf86-video-vesa    // 通用显卡驱动</div><div class="line"># pacman -S xf86-video-intel    // intel核显驱动</div><div class="line"># pacman -S nvidia    // nvidia 显卡驱动</div><div class="line">如果双显卡想使用nvidia的optimus技术的话，可以使用bumblebee来实现，因为nvidia的optimus技术在linux下是无法使用的，可以用第三方技术来实现，使用bumblebee方式可以用下边的方法安装，来解决依赖问题：</div><div class="line"># pacman -S intel-dri xf86-video-intel bumblebee nvidia</div><div class="line"># gpasswd -a fbcha bumblebee    // 把用户添加到bumblebee用户组</div></pre></td></tr></table></figure></p>
+<p><strong>安装X窗口系统服务：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># pacman -S xorg-server xorg-server-utils</div><div class="line"># pacman -S xf86-input-synaptics    // 触控板驱动</div><div class="line"># pacman -S ttf-dejavu wqy-microhei    // 安装字体</div></pre></td></tr></table></figure></p>
+<p><strong>安装桌面环境：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># pacman -S xfce4 xfce4-goodies</div></pre></td></tr></table></figure></p>
+<p><strong>安装输入法：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># pacman -S fcitx-im fcite-configtool    // 安装fcitx</div><div class="line">配置输入法</div><div class="line"># nano ./.xinitrc    // 编辑.xinitrc 没有可以自行创建，在用户目录，然后写入以下信息</div><div class="line">export LANG=zh-CN.UTF-8</div><div class="line">export GTK_IM_MODULE=fcitx</div><div class="line">export QT_IM_MODULE=fcitx</div><div class="line">export XMODIFIERS=&quot;@im=fcitx&quot;</div></pre></td></tr></table></figure></p>
+<p><strong>安装网络连接：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># pacman -S networkmanager network-manager-applet xfce4-notifyd hicolor-icon-theme gonme-icon-theme gnome-keyring</div><div class="line">如果有dhcpcd则关闭</div><div class="line"># systemctl disable dhcpcd.service</div><div class="line"># systemctl enable NetworkManager</div><div class="line"># systemctl start NetworkManager</div></pre></td></tr></table></figure></p>
+<p><strong>安装Bluetooth：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># pacman -S bluez bluez-utils blueman</div><div class="line"># systemctl enable bluetooth</div><div class="line">如果需要开机启动蓝牙：</div><div class="line"># nano /etc/udev/rules.d/10-local.rules</div><div class="line">写入以下内容：</div><div class="line"># Set bluetooth power up</div><div class="line">ACTION==&quot;add&quot;, KERNEL==&quot;hci0&quot;, RUN+=&quot;usr/bin/hciconfig hci0 up&quot;</div></pre></td></tr></table></figure></p>
+<p><strong>安装yaourt：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># nano /etc/pacman.conf    // 编辑pacman.conf，写入以下内容</div><div class="line">[archlinuxcn]</div><div class="line">SigLevel = Optional TrustedOnly</div><div class="line">Server = http://mirrors.163.com/archlinux-cn/$arch</div><div class="line">更新本地数据</div><div class="line"># pacman -Syy</div><div class="line">安装yaourt</div><div class="line"># pacman -S yaourt</div></pre></td></tr></table></figure></p>
+<p><strong>关闭独显：</strong><br>下面的配置文件如果没有需要自行创建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"># pacman -S bbswitch</div><div class="line"># nano /etc/modules-load.d/bbswitch.conf    // 写入下边内容，每次启动都会加载bbswitch模块</div><div class="line">bbswitch</div><div class="line"># nano /etc/modprobe.d/bbswitch.conf    // 写入下边内容，关闭bbswitch默认加载参数</div><div class="line">options bbswitch load_state=0</div><div class="line"># nano /etc/modprobe.d/nouveau_blacklist.conf</div><div class="line">写入下边内容，有时候bbswitch加载了，但是不能关闭显卡，因为有些模块正在占用着，因此要禁掉</div><div class="line">blacklist nouveau</div><div class="line">blacklist nvidiafb</div><div class="line"># nano /usr/lib/systemd/system-shutdown/nvidia_card_enable.sh</div><div class="line">需要运行权限，写入下边内容，每次reboot的时候，显卡都是关闭的，不管是重启到windows还是linux，都会找不到设备，必须彻底关机才行。解决该问题的办法就是每次重启都启用显卡。</div><div class="line">#!/bin/bash</div><div class="line">case &quot;$1&quot; in</div><div class="line">        reboot)</div><div class="line">                echo &quot;Enabling NVIDIA GPU&quot;</div><div class="line">                echo ON &gt; /proc/acpi/bbswitch</div><div class="line">        ;;</div><div class="line">        *)</div><div class="line">esac</div></pre></td></tr></table></figure></p>
+<p><strong>配置laptop-mode-tools：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># yaourt -S laptop-mode-tools</div><div class="line"># pacman -S hdparm cpupower</div><div class="line"># systemctl enable cpupower.service</div><div class="line">修改 /etc/laptop-mode/laptop-mode.conf</div><div class="line">ENABLE_LAPTOP_MODE_ON_AC=0</div><div class="line">默认为 0 ，这里可以修改为 1 ，使用外接电源时也启用laptop_mode</div><div class="line">CONTROL_HD_IDLE_TIMEOUT=1    // 默认为 1 ，修改为 0</div><div class="line">BATT_HD_POWERMGMT=1    // 默认为 1 ，修改为128</div><div class="line"># systemctl enable laptop-mode.service</div></pre></td></tr></table></figure></p>
+<p><strong>安装声音工具：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># pacman -S alsa-utils</div></pre></td></tr></table></figure></p>
+<p><strong>配置Fn+快捷键：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">编辑 /etc/default/grub</div><div class="line"># nano /etc/default/grub</div><div class="line">将 GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet&quot; 修改为：</div><div class="line">GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet acpi_osi=&quot;</div><div class="line"># nano /usr/share/X11/xorg.conf.d/20-intel.conf    // 如没有自行创建，写入下边内容</div><div class="line">Section &quot;Device&quot;</div><div class="line">        Identifier    &quot;card0&quot;</div><div class="line">        Driver        &quot;intel&quot;</div><div class="line">        Option        &quot;Backlight&quot;    &quot;intel_backlight&quot;</div><div class="line">        BusID        &quot;PCI:0:2:0&quot;</div><div class="line">EndSection</div></pre></td></tr></table></figure></p>
+<p>到此，archlinux 安装配置完毕，以上只是按本人机器做的安装和配置，会和实际情况或其它机型有所不同，仅供参考。</p>
+</div>
+						
+							<div class="post-tags">
+							<span class="fa fa-tags tag"></span>
+							
+							<a href="/tags/asus/" class="label label-primary" target="_blank">asus</a> <a href="/tags/zenbook/" class="label label-primary" target="_blank">zenbook</a> <a href="/tags/u303ub/" class="label label-primary" target="_blank">u303ub</a> <a href="/tags/archlinux/" class="label label-primary" target="_blank">archlinux</a>
+							</div>
+						
+						</div>
+						
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+										<div class="sidebar-container">
+						<div class="user-box">
+							<div class="tile">
+								<img class="tile-image big-illustration img-circle" alt="" src="/img/author_head.jpe" />
+								<h3 class="tile-title">fbcha</h3>
+								<p></p>
+								<a class="btn btn-primary" href="https://github.com/fbcha" target="_blank">
+									<i class="fa fa-github fa-2x fa-inverse"></i>
+								</a>
+								<a class="btn btn-primary" href="http://weibo.com/p/1005051191108697" target="_blank">
+									<i class="fa fa-weibo fa-2x fa-inverse"></i>
+								</a>
+								<a class="btn btn-primary" href="/atom.xml">
+									<i class="fa fa-rss fa-2x fa-inverse"></i>
+								</a>
+							</div>
+						</div>
+						<div class="archives-box">
+							<h6>Archives</h6>
+							<div>
+								<ul class="list-unstyled">
+									<li>
+									<a class="sidebar_archives-link" href="/archives/2016/12/">2016-12-20<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">2016-12-17<span class="sidebar_archives-count">1</span></a>
+								</ul>
+							</div>
+						</div>
+						
+							
+    <div class="tag-cloud-box">
+		<h6>Tag Cloud</h6>
+        <p>
+            <a href="/tags/archlinux/" style="font-size: 10px;">archlinux</a> <a href="/tags/asus/" style="font-size: 10px;">asus</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/prober/" style="font-size: 10px;">prober</a> <a href="/tags/u303ub/" style="font-size: 10px;">u303ub</a> <a href="/tags/zenbook/" style="font-size: 10px;">zenbook</a> <a href="/tags/探针/" style="font-size: 10px;">探针</a>
+        </p>
+    </div>
+
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+		<footer>
+		<div class="container">
+			<div id="footer-wrapper">
+				<div class="footer-copy">
+					<p>Copyright &copy; 2016 ZeroSN.com</p>
+					<p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/fbcha/hexo-theme-zerosn" target="_blank">ZeroSN</a></p>
+				</div>
+			</div>
+		</div>
+		
+<div id="site-count" style="display: none;">
+	<script src="https://s4.cnzz.com/z_stat.php?id=1260976776&web_id=1260976776" language="JavaScript"></script>
+</div>
+
+	</footer>
+	<script src="/js/vendor/jquery.min.js"></script>
+<script src="/js/vendor/video.js"></script>
+<script src="/js/flat-ui.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/nprogress.min.js"></script>
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#3498db'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #3498db, 0 0 15px #3498db'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#3498db',
+        'border-left-color': '#3498db'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+	
+
+</body>
+</html>
